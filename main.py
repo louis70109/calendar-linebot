@@ -72,6 +72,8 @@ def handle_message(event):
           """}])
     print(response.choices[0].message)
     processed_text: str = response.choices[0].message.content
+    logger.info(f'Google URL: {processed_text}')
+    logger.info(f"Is it url? {is_url_valid(processed_text)}")
     if is_url_valid(processed_text):
         response: FlexSendMessage = FlexSendMessage(alt_text='行事曆網址', contents={
             "type": "bubble",
