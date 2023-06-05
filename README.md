@@ -4,7 +4,7 @@
 
 ## 主要功能
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5JTU15VtDAw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![Everything Is AWESOME](https://img.youtube.com/vi/5JTU15VtDAw/0.jpg)](https://www.youtube.com/watch?v=5JTU15VtDAw "Everything Is AWESOME")
 
 1. 透過 LINE Webhook 接收使用者的文字訊息。
 2. 利用 OpenAI API 處理接收到的文字，並轉換為 Google Calendar 的邀請網址。
