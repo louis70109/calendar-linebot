@@ -4,7 +4,7 @@
 
 ## 主要功能
 
-<video src="https://raw.githubusercontent.com/louis70109/calendar-linebot/main/screenshot/recording.mp4" controls="controls" width="500" height="300"></video>
+[![Everything Is AWESOME](https://img.youtube.com/vi/5JTU15VtDAw/0.jpg)](https://www.youtube.com/watch?v=5JTU15VtDAw "Everything Is AWESOME")
 
 1. 透過 LINE Webhook 接收使用者的文字訊息。
 2. 利用 OpenAI API 處理接收到的文字，並轉換為 Google Calendar 的邀請網址。
@@ -12,7 +12,7 @@
 
 ## 加入好友
 
-![](https://raw.githubusercontent.com/louis70109/calendar-linebot/main/screenshot/qrcode..jpeg)
+<img src="https://raw.githubusercontent.com/louis70109/calendar-linebot/main/screenshot/qrcode..jpeg" controls="controls" width="300" height="300">
 
 ## 環境變數
 
