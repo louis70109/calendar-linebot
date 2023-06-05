@@ -53,7 +53,7 @@ def handle_message(event):
         Channel 將內容整理成 google calendar 邀請網址，並且要能整理出對應標題、行事曆時間、地點，其餘內容整理完後放在描述裡面。
         Receiver 收到連結需要點選放進 google calendar 的民眾。
         Effect 最後不論怎麼樣，一定要回傳只能給我網址，其他內容都不要給我。
-        請參考以上的格式，只需要將下列的文字轉換成 google calendar URL回傳給我即可，不要有其他的敘述。
+        請參考以上的格式，只需要將下列的文字轉換成 google calendar URL回傳給我即可，不要有其他的敘述以及空白鍵。
         
         {text}
         """,

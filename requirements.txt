@@ -1,4 +1,5 @@
 fastapi
-uvicorn
+uvicorn[standard]
 line-bot-sdk
 openai
+gunicorn
