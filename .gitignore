@@ -22,3 +22,4 @@ var/
 .tox/
 pokemon_wiki.db-journal
 firebase.json
+.pytest_cache
