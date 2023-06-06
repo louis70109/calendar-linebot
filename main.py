@@ -35,6 +35,17 @@ def is_url_valid(url):
     return re.match(regex, url) is not None
 
 
+def delete_strings(s):
+    # Step 1: Delete all contents from '#' to the next '&' character
+    s = re.sub(r'#[^&]*', '', s)
+
+    # Step 2: If '&openExternalBrowser=1' is not at the end, add it
+    if '&openExternalBrowser=1' != s:
+        s += '&openExternalBrowser=1'
+    return s
+
+
+
 @app.post("/webhooks/line")
 async def callback(request: Request):
     # get X-Line-Signature header value
@@ -52,13 +63,6 @@ async def callback(request: Request):
         return 'Invalid signature. Please check your channel access token/channel secret.'
 
     return 'OK'
-
-
-def delete_strings(s):
-    # 使用正则表达式匹配并替换字符串
-    s = re.sub(r'#eventpage_\S*', '', s)
-    s = re.sub(r'#gid\S*', '', s)
-    return s
 
 
 @handler.add(MessageEvent, message=TextMessage)
