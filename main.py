@@ -45,7 +45,6 @@ def delete_strings(s):
     return s
 
 
-
 @app.post("/webhooks/line")
 async def callback(request: Request):
     # get X-Line-Signature header value
@@ -68,6 +67,25 @@ async def callback(request: Request):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     text = event.message.text
+    action = {
+        "type": "text",
+        "text": "♻️ 文字太長請自行剪貼 ♻️",
+        "size": "lg",
+        "wrap": True
+    }
+    if len(text) < 300:
+        action = {
+            "type": "text",
+            "text": "♻️ 點我重新產生 ♻️",
+            "action": {
+                "type": "message",
+                "label": "action",
+                "text": text
+            },
+            "size": "lg",
+            "wrap": True
+        }
+
     try:
         # Use OpenAI API to process the text
         response = openai.ChatCompletion.create(
@@ -84,7 +102,8 @@ def handle_message(event):
             """}])
         print(response.choices[0].message)
         processed_text: str = response.choices[0].message.content
-        processed_text = delete_strings(processed_text) + '&openExternalBrowser=1'
+        processed_text = delete_strings(
+            processed_text) + '&openExternalBrowser=1'
         logger.info(f'Google URL: {processed_text}')
         logger.info(f"Is it url? {is_url_valid(processed_text)}")
     except Exception as e:
@@ -109,7 +128,8 @@ def handle_message(event):
                             "label": "WEBSITE",
                             "uri": processed_text
                         }
-                    }
+                    },
+                    action
                 ],
                 "flex": 0
             }
