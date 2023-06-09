@@ -68,24 +68,30 @@ async def callback(request: Request):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     text = event.message.text
-    # Use OpenAI API to process the text
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": f"""
-        Source 你會幫我把內容都轉換為 google calendar 的邀請網址。
-        Message 我會給你任何格式的訊息，需要整理裡面的內容並對應上google calendar 的渲染方式，中文字需要編碼。
-        Channel 將內容整理成 google calendar 邀請網址，並且要能整理出對應標題、行事曆時間、地點，其餘內容整理完後放在描述裡面，現在是 2023 年。
-        Receiver 收到連結需要點選放進 google calendar 的民眾。
-        Effect 最後不論怎麼樣，一定要回傳只能給我網址，其他內容都不要給我。
-        請參考以上的格式，只需要將下列的文字轉換成 google calendar URL回傳給我即可，'不要'有其他的敘述,空白字元, 換行符號, 句點。
-        
-        {text}
-        """}])
-    print(response.choices[0].message)
-    processed_text: str = response.choices[0].message.content
-    processed_text = delete_strings(processed_text) + '&openExternalBrowser=1'
-    logger.info(f'Google URL: {processed_text}')
-    logger.info(f"Is it url? {is_url_valid(processed_text)}")
+    try:
+        # Use OpenAI API to process the text
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": f"""
+            Source 你會幫我把內容都轉換為 google calendar 的邀請網址。
+            Message 我會給你任何格式的訊息，需要整理裡面的內容並對應上google calendar 的渲染方式，中文字需要編碼。
+            Channel 將內容整理成 google calendar 邀請網址，並且要能整理出對應標題、行事曆時間、地點，其餘內容整理完後放在描述裡面，現在是 2023 年。
+            Receiver 收到連結需要點選放進 google calendar 的民眾。
+            Effect 最後不論怎麼樣，一定要回傳只能給我網址，其他內容都不要給我。
+            請參考以上的格式，只需要將下列的文字轉換成 google calendar URL回傳給我即可，'不要'有其他的敘述,空白字元, 換行符號, 句點。
+            
+            {text}
+            """}])
+        print(response.choices[0].message)
+        processed_text: str = response.choices[0].message.content
+        processed_text = delete_strings(processed_text) + '&openExternalBrowser=1'
+        logger.info(f'Google URL: {processed_text}')
+        logger.info(f"Is it url? {is_url_valid(processed_text)}")
+    except Exception as e:
+        logger.warning('--------------------')
+        logger.warning(e)
+        logger.warning('--------------------')
+
     if is_url_valid(processed_text):
         response: FlexSendMessage = FlexSendMessage(alt_text='行事曆網址', contents={
             "type": "bubble",
