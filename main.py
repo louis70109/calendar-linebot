@@ -100,7 +100,8 @@ def handle_message(event):
             
             {text}
             """}])
-        print(response.choices[0].message)
+        
+        logger.info(response.choices[0].message)
         processed_text: str = response.choices[0].message.content
         processed_text = delete_strings(
             processed_text) + '&openExternalBrowser=1'
@@ -140,7 +141,7 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         [
-            TextSendMessage(text="請確認以下網址"),
+            TextSendMessage(text="點選以下網址前，先確認時間地點："),
             response
         ]
     )
