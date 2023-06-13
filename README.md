@@ -4,7 +4,7 @@
 
 ## 主要功能
 
-[![Everything Is AWESOME](https://img.youtube.com/vi/5JTU15VtDAw/0.jpg)](https://www.youtube.com/watch?v=5JTU15VtDAw "Everything Is AWESOME")
+[![Everything Is AWESOME](https://img.youtube.com/vi/5JTU15VtDAw/0.jpg)](https://www.youtube.com/watch?v=5JTU15VtDAw 'Everything Is AWESOME')
 
 1. 透過 LINE Webhook 接收使用者的文字訊息。
 2. 利用 OpenAI API 處理接收到的文字，並轉換為 Google Calendar 的邀請網址。
@@ -68,6 +68,29 @@ ngrok http 8080
 8. Channel 建立後，您將被導向 Channel 的設定頁面。在這裡，您可以看到您的 Channel ID、Channel Secret、以及 Channel Access Token，這些資訊將被用於設定 bot。
 9. 還有一個重要的設定是「Use webhooks」。如果您希望您的 bot 可以接收來自 LINE 的訊息，您需要打開這個設定，並輸入您的 webhook URL。您的 webhook URL 是一個可以接收 POST 請求的伺服器網址。
 10. 之後，您可以在 LINE app 中加入您剛剛建立的 bot 為好友，並開始測試。
+
+## Google Cloud Platform 佈署
+
+Clone 此專案
+
+```
+git clone https://github.com/louis70109/calendar-linebot
+cd calendar-linebot/
+```
+
+### gcloud 基礎設定
+
+- `gcloud init`：初始化 gcloud CLI，該指令會提示登錄 Google 帳戶，並選擇您要使用的 GCP 項目。
+- `gcloud config set project PROJECT_ID`：設定 GCP Project ID，以便 gcloud CLI 與該項目交互使用。
+- `gcloud auth login`：登錄 Google 帳戶。
+
+透過 [gcloud](https://cloud.google.com/sdk/docs/install?hl=zh-cn) 指令佈署
+
+```
+gcloud run deploy calendar-linebot-1 --source .
+```
+
+> 佈署參考: [【GCP】將 FastAPI 佈署上 Cloud Run](https://nijialin.com/2023/03/19/gcp-why-need-cloudrun-as-serverless/#5-%E4%BD%88%E7%BD%B2%E5%88%B0-Google-Cloud-Run)
 
 ## 參與貢獻
 
