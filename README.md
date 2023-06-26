@@ -1,5 +1,7 @@
 ## 概述
 
+![](https://raw.githubusercontent.com/louis70109/calendar-linebot/main/screenshot/user-flow.png)
+
 這是一個用 Python 撰寫的 FastAPI 應用程式，它運用 OpenAI 的 GPT-3 模型與 LINE Bot API 進行文字訊息處理，並將處理後的文字訊息轉換成 Google Calendar 給使用者，可以加入行事曆。
 
 ## 主要功能
@@ -35,11 +37,6 @@ uvicorn
 line-bot-sdk
 openai
 
-可以用 pip 安裝所有需求：
-
-```
-pip install -r requirements.txt
-```
 
 ## 使用方法
 
