@@ -58,7 +58,7 @@ def create_gcal_url(
     return event_url + "&openExternalBrowser=1"
 
 
-def arrange_flex_message(gcal_url: str, action: list) -> FlexSendMessage:
+def arrange_flex_message(gcal_url: str, action: dict) -> FlexSendMessage:
     return FlexSendMessage(alt_text='行事曆網址', contents={
         "type": "bubble",
         "footer": {
@@ -114,7 +114,7 @@ def handle_message(event):
     if len(text) < 300:
         action = {
             "type": "text",
-            "text": "♻️ 點我重新產生 ♻️",
+            "text": "♻️點我重新產生♻️",
             "action": {
                 "type": "message",
                 "label": "action",
@@ -141,10 +141,10 @@ def handle_message(event):
         logger.info(response.choices[0].message)
         processed_text: str = response.choices[0].message.content
         gcal_list: list = ast.literal_eval(processed_text)
-        title = gcal_list[0]
-        date = gcal_list[1]
-        location = gcal_list[2]
-        desc = gcal_list[3]
+        title = gcal_list[0] or 'TBC'
+        date = gcal_list[1] or 'TBC'
+        location = gcal_list[2] or 'TBC'
+        desc = gcal_list[3] or 'TBC'
         gcal_url: str = create_gcal_url(title, date, location, desc)
         logger.info(f'Google URL: {gcal_url}')
         logger.info(f"Is it url? {is_url_valid(gcal_url)}")
@@ -152,7 +152,6 @@ def handle_message(event):
         logger.warning('--------------------')
         logger.warning(e)
         logger.warning('--------------------')
-
     if is_url_valid(gcal_url):
         response: FlexSendMessage = arrange_flex_message(
             gcal_url=gcal_url, action=action)
@@ -163,13 +162,9 @@ def handle_message(event):
         event.reply_token,
         [
             TextSendMessage(text="點選以下網址前，先確認時間地點："),
-            TextSendMessage(text=processed_text),
-            f'''
-                標題: {title}
-                時間: {date}
-                地點: {location}
-                描述: {desc}
-            ''',
+            TextSendMessage(
+                text=f'標題: {title}\n時間: {date}\n地點: {location}\n描述: {desc}'),
+            response
         ]
     )
 
