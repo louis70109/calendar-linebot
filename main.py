@@ -26,6 +26,10 @@ handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
+@app.get("/health")
+async def health():
+    return 'ok'
+
 def is_url_valid(url):
     regex = re.compile(
         r'^(?:http|ftp)s?://'  # http:// or https://
